@@ -1,6 +1,5 @@
-
-
 def hello():
-    return "Hello" 
+    return "Hello"
 
-print(hello())
+if __name__ == "__main__" : 
+    print(hello())
