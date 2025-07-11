@@ -32,7 +32,7 @@ def main():
         return
     # Check if operator is valid
     if operator not in ('+', '-', '*', '/'):
-        print("Invalid operator. Allowed operators are +, -, *, /.")
+        print("Invalid operator.")
         return
 
     # Perform the operation
@@ -51,14 +51,14 @@ def operation(num1, num2, operator):
             result = multiply(num1, num2)
         elif operator == '/':
             result = divide(num1, num2)
-        print(f"Result: {result}")
+        print(f"Result: <{result}>")
     except ZeroDivisionError as e:
         print(f"Error: {e}")
     return
 
 def divide(num1, num2):
     if num2 == 0:
-        raise ZeroDivisionError("0으로 나눌 수 없습니다.")
+        raise ZeroDivisionError("Error: Division by zero.")
     return num1 / num2
 
 def multiply(num1, num2):
