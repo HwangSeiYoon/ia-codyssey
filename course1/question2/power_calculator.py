@@ -19,9 +19,6 @@ def main():
     for _ in range(abs(exponent)):
         result *= base
 
-    if exponent < 0:
-        result = 1 / result
-
     print(f"Result: {result}")
 
 if __name__ == "__main__":
