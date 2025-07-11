@@ -5,21 +5,22 @@ def main():
         print("Invalid number input.")
         return
 
-    while True:
-        try:
-            exponent = int(input("Enter exponent (must be greater than 0): "))
-            if exponent <= 0:
-                print("Exponent must be greater than 0. Please try again.")
-                continue
-            break
-        except ValueError:
-            print("Invalid exponent input. Please enter an integer.")
+    try:
+        exponent = int(input("Enter exponent (can be any integer): "))
+    except ValueError:
+        print("Invalid exponent input. Please enter an integer.")
+        return
 
     result = 1.0
     for _ in range(abs(exponent)):
-        result *= base
+        if exponent < 0:
+            result /= base
+        else:
+            result *= base
 
-    print(f"Result: {result}")
+    print(f"{base} raised to the power of {exponent} is {result}")
+
+    return result
 
 if __name__ == "__main__":
     main()
