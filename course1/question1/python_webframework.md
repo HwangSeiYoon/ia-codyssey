@@ -34,6 +34,3 @@
 - Django: https://www.djangoproject.com/
 - Flask: https://flask.palletsprojects.com/
 - FastAPI: https://fastapi.tiangolo.com/
-
-
-hello 함수를 잘 작성하셨고, python, 확장 프로그램, flask 등 설치가 잘 되어있는 것을 확인했습니다. python web framework에 대해서도 알아갈 수 있었습니다. 고생하셨습니다!
