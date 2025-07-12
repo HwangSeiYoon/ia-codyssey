@@ -20,8 +20,8 @@ def main():
             return
         
         print(f"Current number: {tmp_value}, Min: {min_value}, Max: {max_value}")
-        
-    print(f"Final Min: {min_value}, Final Max: {max_value}")
+
+    print(f"Min: {min_value}, Max: {max_value}")
 
 if __name__ == "__main__":
     main()

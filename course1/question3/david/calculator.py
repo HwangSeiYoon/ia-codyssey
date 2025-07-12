@@ -25,8 +25,9 @@ def main():
     
     # Check if num1 and num2 are valid integers
     try:
-        num1 = int(num1)
-        num2 = int(num2)
+        num1 = int(float(num1))
+        num2 = int(float(num2))
+        
     except ValueError:
         print("Invalid number input.")
         return
@@ -51,6 +52,8 @@ def operation(num1, num2, operator):
             result = multiply(num1, num2)
         elif operator == '/':
             result = divide(num1, num2)
+
+        result = int(result)
         print(f"Result: <{result}>")
     except ZeroDivisionError as e:
         print(f"Error: {e}")
