@@ -1,4 +1,4 @@
-def quick_sort(arr):
+def quick_sort(arr) -> list:
     if len(arr) <= 1:
         return arr
     pivot = arr[len(arr) // 2]
