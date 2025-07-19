@@ -5,7 +5,7 @@ from gtts import gTTS
 import base64
 
 DEFAULT_LANG = os.getenv('DEFAULT_LANG', 'ko')
-LANG_OPTIONS = ['ko', 'en', 'ja', 'es']
+LANG_OPTIONS = ['ko', 'en', 'ja', 'es','error']
 
 app = Flask(__name__, template_folder='templates')
 
