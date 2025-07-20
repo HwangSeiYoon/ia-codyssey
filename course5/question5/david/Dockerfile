@@ -1,5 +1,4 @@
-FROM python:3.10-slim
-
+FROM ubuntu:20.04
 # Set the working directory
 WORKDIR /app
 
@@ -7,10 +6,11 @@ WORKDIR /app
 COPY . .
 
 # Install the required packages
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y python3-pip && rm -rf /var/lib/apt/lists/*
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Expose the port the app runs on
 EXPOSE 80
 
 # Command to run the application
-CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:80"]
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:80"]
