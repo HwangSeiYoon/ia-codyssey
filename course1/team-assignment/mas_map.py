@@ -1,12 +1,9 @@
+import os
 import pandas as pd
-import matplotlib.pyplot as plt
 
 # 모든 행/열 생략 없이 출력
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
-
-import os
-import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(base_dir, "dataFile")
