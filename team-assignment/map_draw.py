@@ -26,7 +26,7 @@ merged = merged.sort_values(by='area')
 x_min, x_max = merged['x'].min(), merged['x'].max()
 y_min, y_max = merged['y'].min(), merged['y'].max()
 
-plt.figure(figsize=(10, 8))
+plt.figure(figsize=(x_max-x_min+1, y_max-y_min))
 
 # 그리드 라인
 
@@ -60,7 +60,7 @@ plt.scatter(my_home['x'], my_home['y'], marker='^', s=300, color='green', label=
 # 범례 (중복 방지)
 handles, labels = plt.gca().get_legend_handles_labels()
 by_label = dict(zip(labels, handles))
-plt.legend(by_label.values(), by_label.keys(), loc='upper right')
+plt.legend(by_label.values(), by_label.keys(), loc='upper left')
 
 
 # 축 설정
@@ -70,6 +70,8 @@ plt.ylim(y_min - 1, y_max + 1)
 # set_aspect('equal')는 x축과 y축의 단위 길이를 동일하게 설정하여 비율을 유지
 # adjustable='box'는 박스 형태로 유지
 plt.gca().set_aspect('equal', adjustable='box')
+# y축의 역순 설정
+plt.gca().invert_yaxis()
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Area 1 Map Visualization')
