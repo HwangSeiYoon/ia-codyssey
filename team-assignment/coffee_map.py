@@ -5,6 +5,9 @@ import pandas as pd
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
 
+# 1. CSV 파일 읽기
+# base_dir: 현재 파일의 디렉토리 경로
+# data_dir: 데이터 파일이 있는 디렉토리 경로
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(base_dir, "dataFile")
 
@@ -29,14 +32,14 @@ merged = area_struct.merge(area_map, how="left", on=["x", "y"])
 merged = merged.sort_values(by="area")
 
 # 5. area 1만 필터링
-area1 = merged[merged["area"] == 1]
+merged = merged[merged["area"] == 1]
 
 print("\n=== area 1 데이터 ===")
-print(area1)
+print(merged)
 
 # (보너스) 구조물 종류별 요약 통계
-if "struct" in area1.columns:
+if "struct" in merged.columns:
     print("\n=== area 1 구조물 종류별 통계 ===")
-    print(area1["struct"].value_counts())
+    print(merged["struct"].value_counts())
 else:
-    print("\n[경고] area1 데이터에 'struct' 컬럼이 없습니다. 컬럼 목록:", area1.columns)
+    print("\n[경고] area1 데이터에 'struct' 컬럼이 없습니다. 컬럼 목록:", merged.columns)

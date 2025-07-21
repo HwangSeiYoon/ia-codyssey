@@ -1,11 +1,16 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import os
 
 # 1. CSV 파일 읽기
-area_map = pd.read_csv('/Users/n99102/ia-codyssey/course1/team-assignment/dataFile/area_map.csv')
-area_struct = pd.read_csv('/Users/n99102/ia-codyssey/course1/team-assignment/dataFile/area_struct.csv')
-area_category = pd.read_csv('/Users/n99102/ia-codyssey/course1/team-assignment/dataFile/area_category.csv')
+# base_dir: 현재 파일의 디렉토리 경로
+# data_dir: 데이터 파일이 있는 디렉토리 경로
+base_dir = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(base_dir, "dataFile")
+
+area_map = pd.read_csv(os.path.join(data_dir, "area_map.csv"))
+area_struct = pd.read_csv(os.path.join(data_dir, "area_struct.csv"))
+area_category = pd.read_csv(os.path.join(data_dir, "area_category.csv"))
 
 # 2. 구조물 ID를 이름으로 변환
 area_struct = area_struct.merge(area_category, how='left', on='category')
@@ -24,6 +29,8 @@ y_min, y_max = merged['y'].min(), merged['y'].max()
 plt.figure(figsize=(10, 8))
 
 # 그리드 라인
+
+
 for x in range(int(x_min), int(x_max) + 1):
     plt.axvline(x=x, color='lightgray', linestyle='--', linewidth=0.5, zorder=0)
 for y in range(int(y_min), int(y_max) + 1):
@@ -31,6 +38,9 @@ for y in range(int(y_min), int(y_max) + 1):
 
 # 건설 현장 먼저 그림 (겹칠 때 우선) (회색 사각형)
 construction = merged[merged['ConstructionSite'] == 1]
+# scatter 함수 파라미터 설명
+# marker: 마커 모양, s: 마커 크기, color: 마커 색상, label: 범례 이름, zorder: 레이어 순서
+# 건설현장이 우선시 되어야 하면 zorder를 높게 설정
 plt.scatter(construction['x'], construction['y'], marker='s', s=400, color='gray', label='Construction Site', zorder=3)
 
 # 아파트와 빌딩(갈색 원형)
@@ -56,12 +66,17 @@ plt.legend(by_label.values(), by_label.keys(), loc='upper right')
 # 축 설정
 plt.xlim(x_min - 1, x_max + 1)
 plt.ylim(y_min - 1, y_max + 1)
+# gca(): 현재 Axes 객체를 가져옴
+# set_aspect('equal')는 x축과 y축의 단위 길이를 동일하게 설정하여 비율을 유지
+# adjustable='box'는 박스 형태로 유지
 plt.gca().set_aspect('equal', adjustable='box')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Area 1 Map Visualization')
 
+# tight_layout()는 레이아웃을 자동으로 조정하여 요소들이 겹치지 않도록 함
 plt.tight_layout()
+
 # Save image
-plt.savefig('/Users/n99102/ia-codyssey/course1/team-assignment/mas_map.png')
+plt.savefig(os.path.join(base_dir, 'map.png'), dpi=300, bbox_inches='tight')
 plt.show()
