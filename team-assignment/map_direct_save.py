@@ -47,7 +47,7 @@ goal = (cafe["x"], cafe["y"])
 def bfs(start, goal, construction_sites, valid_points):
     # BFS 큐 초기화
     queue = deque()
-    # 시작점과 경로를 큐에 추가
+    # 시작점 큐에 추가
     queue.append((start, [start]))
     # 방문한 좌표 집합
     visited = set()
@@ -64,15 +64,27 @@ def bfs(start, goal, construction_sites, valid_points):
     # 현재 좌표에서 상하좌우로 이동 가능한 좌표를 탐색
     # 이동 가능한 좌표가 construction_sites에 포함되지 않고 valid_points에 있는 경우
     while queue:
+        # 큐 내용 print
+        for item in queue:
+            # 디버깅용: 큐에 있는 아이템 출력
+            # 큐 내용을 라인 단위로 출력
+            print(f"Queue item: {item[0]} with path {item[1]}")
+        
         (x, y), path = queue.popleft()
         if (x, y) == goal:
             return path
+        # 좌,우,상,하로 이동
+        # 이동 가능한 좌표를 탐색
         for dx, dy in directions:
+            # 새로운 좌표 계산
             nx, ny = x + dx, y + dy
+            # 이미 방문한 좌표이거나 건설 현장 좌표이거나 유효하지 않은 좌표는 건너뜀
             if (nx, ny) in visited:
                 continue
+            # 건설 현장 좌표는 건너뜀
             if (nx, ny) in construction_sites:
                 continue
+            # 유효한 좌표가 아니면 건너뜀
             if (nx, ny) not in valid_points:
                 continue
             visited.add((nx, ny))
@@ -80,7 +92,7 @@ def bfs(start, goal, construction_sites, valid_points):
     return None
 
 
-
+# 최단 경로 탐색
 path = bfs(start, goal, construction_sites, valid_points)
 
 if path is None:
