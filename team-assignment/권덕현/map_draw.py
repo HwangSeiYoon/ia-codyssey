@@ -79,7 +79,7 @@ legend_elements = [
     Line2D([0], [0], marker='o', color='w', label='Apartment', markerfacecolor='saddlebrown', markersize=10),
     Line2D([0], [0], marker='o', color='w', label='Building', markerfacecolor='saddlebrown', markersize=10)
 ]
-ax.legend(handles=legend_elements, loc='upper right')
+ax.legend(handles=legend_elements, loc='upper left')
 
 # 좌표 축 설정
 ax.set_xlim(0.5, max_x + 0.5)
