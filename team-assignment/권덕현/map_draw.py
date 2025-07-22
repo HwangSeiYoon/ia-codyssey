@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+from matplotlib.patches import Patch
+from matplotlib.lines import Line2D
 
 # 현재 파일 경로 기준으로 상대경로 설정
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -70,8 +72,6 @@ for y in range(1, max_y + 1):
     ax.axhline(y, color='lightgray', linewidth=0.5, zorder=3)
 
 # 범례 추가
-from matplotlib.patches import Patch
-from matplotlib.lines import Line2D
 legend_elements = [
     Patch(facecolor='gray', edgecolor='gray', label='ConstructionSite'),
     Patch(facecolor='green', edgecolor='green', label='BandalgomCoffee'),
