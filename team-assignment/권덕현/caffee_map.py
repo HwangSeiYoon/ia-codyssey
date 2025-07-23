@@ -13,12 +13,19 @@ def load_and_clean_csv(file_name):
     return df
 
 # 파일 불러오기
+pd.set_option("display.max_rows", None)
+pd.set_option("display.max_columns", None)
 map_df = load_and_clean_csv('area_map.csv')
 struct_df = load_and_clean_csv('area_struct.csv')
 category_df = load_and_clean_csv('area_category.csv')
 
 # 구조물 ID를 이름으로 변환 (category → struct)
 struct_df = struct_df.merge(category_df, how='left', on='category')
+
+# 모든 행/열 생략 없이 출력
+
+print('--- 구조물 이름 병합 완료 ---')
+print(struct_df)
 
 # 데이터 병합: 지도 정보와 구조물 정보 합치기
 merged_df = struct_df.merge(map_df, how='left', on=['x', 'y'])
