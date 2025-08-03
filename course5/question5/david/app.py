@@ -1,14 +1,22 @@
 from flask import Flask, render_template
+import socket
+
 
 app = Flask(__name__)
 
 @app.route("/") 
 def hello_world():
-    return "Hello, DevOps!"
+    if app.debug:
+        hostname = '컴퓨터(인스턴스):' + socket.gethostname()
+    else:
+        hostname = ''
+    return render_template("index.html", computername=hostname)
 
 @app.route("/menu") 
 def menu():
+
+    
     return render_template("menu.html")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
