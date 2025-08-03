@@ -6,6 +6,7 @@
 하이	en
 안녕하세요	ko
 안녕하세요	ja
+gggggg
 
 
 

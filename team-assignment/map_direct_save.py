@@ -12,41 +12,79 @@ area_category = pd.read_csv(os.path.join(data_dir, "area_category.csv"))
 
 
 # 구조물 이름 변환 및 병합
-area_struct = area_struct.merge(area_category, how="left", on="category")
-merged = area_struct.merge(area_map, how="left", on=["x", "y"])
+merged = area_struct.merge(area_category, how="left", on="category")
+merged = merged.merge(area_map, how="left", on=["x", "y"])
 
 # 좌표 집합 만들기
+# zip을 사용하여 (x, y) 좌표의 집합 생성
+# set을 사용하여 중복 제거
+# ConstructionSite가 1인 좌표만 추출
 construction_sites = set(
     zip(
         merged[merged["ConstructionSite"] == 1]["x"],
         merged[merged["ConstructionSite"] == 1]["y"],
     )
 )
+# 유효한 좌표 집합 (x, y) 튜플로 변환
+valid_points = set(zip(merged["x"], merged["y"]))
+
+# my_home와 cafe의 좌표 추출
 my_home = merged[merged["struct"] == "MyHome"][["x", "y"]].iloc[0]
 cafe = merged[merged["struct"] == "BandalgomCoffee"][["x", "y"]].iloc[0]
 
+# 시작점과 목표점 설정
+# my_home와 cafe의 좌표를 튜플로 변환
 start = (my_home["x"], my_home["y"])
 goal = (cafe["x"], cafe["y"])
 
 
 # BFS로 최단 경로 탐색
+# BFS 알고리즘을 사용하여 최단 경로를 찾는 함수
+# 시작점에서 목표점까지의 경로를 찾음
+# valid_points는 merged 데이터프레임의 (x, y) 좌표 집합
+# construction_sites는 건설 현장 좌표 집합
+
 def bfs(start, goal, construction_sites, valid_points):
+    # BFS 큐 초기화
     queue = deque()
+    # 시작점 큐에 추가
     queue.append((start, [start]))
+    # 방문한 좌표 집합
     visited = set()
+    # 시작점을 방문한 좌표로 추가
     visited.add(start)
+    # 상하좌우 이동을 위한 방향 벡터
+    # 상: (-1, 0), 하: (1, 0), 좌: (0, -1), 우: (0, 1)
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # 상하좌우
 
+    # BFS 탐색
+    # 큐가 비어있지 않은 동안 반복
+    # 현재 좌표와 경로를 큐에서 꺼냄
+    # 현재 좌표가 목표점이면 경로 반환
+    # 현재 좌표에서 상하좌우로 이동 가능한 좌표를 탐색
+    # 이동 가능한 좌표가 construction_sites에 포함되지 않고 valid_points에 있는 경우
     while queue:
+        # 큐 내용 print
+        for item in queue:
+            # 디버깅용: 큐에 있는 아이템 출력
+            # 큐 내용을 라인 단위로 출력
+            print(f"Queue item: {item[0]} with path {item[1]}")
+        
         (x, y), path = queue.popleft()
         if (x, y) == goal:
             return path
+        # 좌,우,상,하로 이동
+        # 이동 가능한 좌표를 탐색
         for dx, dy in directions:
+            # 새로운 좌표 계산
             nx, ny = x + dx, y + dy
+            # 이미 방문한 좌표이거나 건설 현장 좌표이거나 유효하지 않은 좌표는 건너뜀
             if (nx, ny) in visited:
                 continue
+            # 건설 현장 좌표는 건너뜀
             if (nx, ny) in construction_sites:
                 continue
+            # 유효한 좌표가 아니면 건너뜀
             if (nx, ny) not in valid_points:
                 continue
             visited.add((nx, ny))
@@ -54,7 +92,7 @@ def bfs(start, goal, construction_sites, valid_points):
     return None
 
 
-valid_points = set(zip(merged["x"], merged["y"]))
+# 최단 경로 탐색
 path = bfs(start, goal, construction_sites, valid_points)
 
 if path is None:
