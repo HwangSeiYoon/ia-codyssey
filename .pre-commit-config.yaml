@@ -9,8 +9,3 @@ repos:
     rev: 'v0.32.0'
     hooks:
     -   id: yapf
-  # pylint configuration
-  - repo: https://github.com/pre-commit/mirrors-pylint
-    rev: 'v2.5.3'
-    hooks:
-    -   id: pylint
