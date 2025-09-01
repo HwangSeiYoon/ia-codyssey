@@ -14,14 +14,23 @@ def caesar_cipher_decode(target_text):
     for shift in range(1, 26):
         decoded = ''
         for char in target_text:
+            # 알파벳인지 확인
             if char.isalpha():
+                # 소문자/대문자 구분
+                # find() 메서드를 사용하여 인덱스 찾기
                 idx = alphabet.find(char.lower())
+                # 인덱스가 유효한지 확인
                 if idx != -1:
+                    # 새로운 인덱스 계산
                     new_idx = (idx - shift) % 26
+                    # 알파벳으로 변환
                     new_char = alphabet[new_idx]
+                    # 대문자/소문자 구분
+                    # 대문자인 경우는 대문자로, 소문자인 경우는 소문자로 변환
                     decoded += new_char if char.islower() else new_char.upper()
                 else:
                     decoded += char
+            # 공백 문자나 특수문자는 그대로 추가
             else:
                 decoded += char
         print(f'{shift}: {decoded}')
@@ -29,6 +38,9 @@ def caesar_cipher_decode(target_text):
     return results
 
 def main():
+    '''
+    메인 함수
+    '''
     # 1. 암호문 읽기
     with open('password.txt', 'r', encoding='utf-8') as f:
         cipher_text = f.read().strip()
